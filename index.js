@@ -6,23 +6,39 @@ import cors from "cors";
 
 const app = express();
 
+// ⭐ database connect
+database();
+
+// ⭐ IMPORTANT: slash hatao
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "https://crud-chi-ruby.vercel.app",
+    "http://localhost:5173"
+  ],
+  credentials: true
 }));
+
 app.use(express.json());
 
+// test route
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Backend working 🚀" });
 });
 
-app.use("/books", bookRoute)
-app.use("/signup", signupRoute)
+app.use("/books", bookRoute);
+app.use("/signup", signupRoute);
 
 
-const PORT = 2000;
-app.listen(PORT,() => {
+/* ---------------- LOCALHOST MODE ----------------
+   Vercel me PORT hota hai (environment variable),
+   local me nahi hota.
+*/
+if (!process.env.VERCEL) {
+  const PORT = 2000;
+  app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    database();
-})
+  });
+}
 
+/* ---------------- VERCEL MODE ---------------- */
 export default app;
