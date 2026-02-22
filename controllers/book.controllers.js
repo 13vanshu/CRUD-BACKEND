@@ -4,6 +4,7 @@ export const handleBookStoreController = async (req, res) => {
 
     try {
         const body = req.body
+        console.log("BODY:", req.body);
 
         if (!body.BookName || !body.BookTitle || !body.Author || !body.SellingPrice) {
             return res.status(400).json({ Message: "All Field Required", Success: false })
@@ -31,6 +32,8 @@ export const handleBookStoreController = async (req, res) => {
     }
 
 };
+
+
 
 export const handleBookListController = async (req, res) => {
     try {
